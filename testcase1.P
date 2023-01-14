@@ -2,39 +2,30 @@ attackerLocated('Attacker').
 hacl('Attacker', 'H0', _, _).
 networkServiceInfo('Attacker', _, _, _, _).
 networkServiceInfo('H0', 'IIS_exploit', _, 80 , _).
-vulExists('H0', 'CVE-2002-0364', 'IIS_exploit' ).
-vulProperty('CVE-2002-0364', remoteExploit , privEscalation ).
+vulExists('H0', 'CVE-2002-0364', 'IIS_exploit', remoteExploit , privEscalation ).
 
 hacl('H0', 'H1', _, _).
 hacl('H2', 'H1', _, _).
 networkServiceInfo('H1', 'Ssh_exploit', _, 22 , _).
-vulExists('H1', 'CVE-1999-1455', 'Ssh_exploit' ).
-vulProperty('CVE-1999-1455', remoteExploit , privEscalation ).
+vulExists('H1', 'CVE-1999-1455', 'Ssh_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H1', 'Ftp_exploit', _, 21 , _).
-vulExists('H1', 'CVE-2008-1396', 'Ftp_exploit' ).
-vulProperty('CVE-2008-1396', remoteExploit , privEscalation ).
+vulExists('H1', 'CVE-2008-1396', 'Ftp_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H1', 'Rsh_exploit', _, 514 , _).
-vulExists('H1', 'CVE-1999-0180', 'Rsh_exploit' ).
-vulProperty('CVE-1999-0180', remoteExploit , privEscalation ).
+vulExists('H1', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , privEscalation ).
 
 hacl('H0', 'H2', _, _).
 hacl('H1', 'H2', _, _).
 networkServiceInfo('H2', 'Netbios_exploit', _, 139 , _).
-vulExists('H2', 'CVE-2003-0661', 'Netbios_exploit' ).
-vulProperty('CVE-2003-0661', remoteExploit , privEscalation ).
+vulExists('H2', 'CVE-2003-0661', 'Netbios_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H2', 'Rsh_exploit', _, 514, _).
-vulExists('H2', 'CVE-1999-0180', 'Rsh_exploit' ).
-vulProperty('CVE-1999-0180', remoteExploit , privEscalation ).
+vulExists('H2', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , privEscalation ).
 hacl('H0', 'H3', _, _).
 hacl('H1', 'H3', _, _).
 hacl('H2', 'H3', _, _).
 networkServiceInfo('H3', 'LICQ_exploit', _, 5190 , user).
-vulExists('H3', 'CVE-2001-0349', 'LICQ_exploit' ).
-vulProperty('CVE-2001-0349', remoteExploit , privEscalation ).
+vulExists('H3', 'CVE-2001-0349', 'LICQ_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H3', 'Squid_exploit', _, 80 , user).
-vulExists('H3', 'CVE-2001-1030', 'Squid_exploit' ).
-vulProperty('CVE-2001-1030', remoteExploit , privEscalation ).
+vulExists('H3', 'CVE-2001-1030', 'Squid_exploit', remoteExploit , privEscalation ).
 
 attackGoal(execCode('H3', root)).
 vulExists('H3', _, 'Local_exploit', localExploit, privEscalation).
-
