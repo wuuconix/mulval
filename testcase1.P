@@ -9,16 +9,16 @@ hacl('H2', 'H1', _, _).
 networkServiceInfo('H1', 'Ssh_exploit', _, 22 , _).
 vulExists('H1', 'CVE-1999-1455', 'Ssh_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H1', 'Ftp_exploit', _, 21 , _).
-vulExists('H1', 'CVE-2008-1396', 'Ftp_exploit', remoteExploit , privEscalation ).
+vulExists('H1', 'CVE-2008-1396', 'Ftp_exploit', remoteExploit , rhostOverwrite ).
 networkServiceInfo('H1', 'Rsh_exploit', _, 514 , _).
-vulExists('H1', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , privEscalation ).
+vulExists('H1', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , rshLogin ).
 
 hacl('H0', 'H2', _, _).
 hacl('H1', 'H2', _, _).
 networkServiceInfo('H2', 'Netbios_exploit', _, 139 , _).
 vulExists('H2', 'CVE-2003-0661', 'Netbios_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H2', 'Rsh_exploit', _, 514, _).
-vulExists('H2', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , privEscalation ).
+vulExists('H2', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , rshLogin ).
 hacl('H0', 'H3', _, _).
 hacl('H1', 'H3', _, _).
 hacl('H2', 'H3', _, _).

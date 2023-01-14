@@ -1,0 +1,23 @@
+derived(trust(_host1, _host2)).
+:- table trust/2.
+
+interaction_rule(
+    % trust(Host1, Host2) means Host2 trust Host1
+    (trust(Host1, Host2) :-
+        networkServiceInfo(Host2, Program, Protocol, Port, _),
+        vulExists(Host2, _, Program, remoteExploit, rhostOverwrite),
+        netAccess(Host1, _, _),
+        hacl(Host1, Host2, Protocol, Port)
+    ),
+    rule_desc('trust relation establish cause .rhost', 1.0)
+).
+
+interaction_rule(
+    (execCode(Host2, Perm) :-
+        vulExists(Host2, _, Program, remoteExploit, rshLogin),
+        networkServiceInfo(Host2, Program, Protocol, Port, Perm),
+        trust(Host1, Host2),
+        hacl(Host1, Host2, Protocol, Port)
+    ),
+    rule_desc('rsh login with .rhost trust', 0.8)
+).
