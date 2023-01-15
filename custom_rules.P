@@ -1,15 +1,18 @@
 derived(trust(_host1, _host2)).
+derived(portScan(_host1, _host2)).
 :- table trust/2.
+:- table portScan/2.
 
 interaction_rule(
     % trust(Host1, Host2) means Host2 trust Host1
     (trust(Host1, Host2) :-
         networkServiceInfo(Host2, Program, Protocol, Port, _),
-        vulExists(Host2, _, Program, remoteExploit, rhostOverwrite),
-        netAccess(Host1, _, _),
+        vulExists(Host2, _, Program, remoteExploit, ftpRhostOverwrite),
+        % not only netAccess Host1, but also execCode in Host1
+        execCode(Host1, _),
         hacl(Host1, Host2, Protocol, Port)
     ),
-    rule_desc('trust relation establish cause .rhost', 1.0)
+    rule_desc('trust relation establish cause .rhost', 0.8)
 ).
 
 interaction_rule(
@@ -19,5 +22,26 @@ interaction_rule(
         trust(Host1, Host2),
         hacl(Host1, Host2, Protocol, Port)
     ),
-    rule_desc('rsh login with .rhost trust', 0.8)
+    rule_desc('rsh login with .rhost trust', 1.0)
+).
+
+interaction_rule(
+    % portScan(Host1, Host2) means Host1 has scanded the Host2, knowing the LICQ service port in Host2
+    (portScan(Host1, Host2) :-
+        networkServiceInfo(Host2, Program, Protocol, Port, _),
+        vulExists(Host2, _, Program, remoteExploit, squidPortScan),
+        execCode(Host1, _),
+        hacl(Host1, Host2, Protocol, Port)
+    ),
+    rule_desc('squid port scan exploit knowing the LICQ port', 0.8)
+).
+
+interaction_rule(
+    (execCode(Host2, Perm) :-
+        networkServiceInfo(Host2, Program, Protocol, Port, Perm),
+        vulExists(Host2, _, Program, remoteExploit, licqRemoteToUser),
+        portScan(Host1, Host2),
+        hacl(Host1, Host2, Protocol, Port)
+    ),
+    rule_desc('LICQ-remote-to-user exploit', 1)
 ).

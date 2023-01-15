@@ -9,7 +9,7 @@ hacl('H2', 'H1', _, _).
 networkServiceInfo('H1', 'Ssh_exploit', _, 22 , _).
 vulExists('H1', 'CVE-1999-1455', 'Ssh_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H1', 'Ftp_exploit', _, 21 , _).
-vulExists('H1', 'CVE-2008-1396', 'Ftp_exploit', remoteExploit , rhostOverwrite ).
+vulExists('H1', 'CVE-2008-1396', 'Ftp_exploit', remoteExploit , ftpRhostOverwrite ).
 networkServiceInfo('H1', 'Rsh_exploit', _, 514 , _).
 vulExists('H1', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , rshLogin ).
 
@@ -19,13 +19,14 @@ networkServiceInfo('H2', 'Netbios_exploit', _, 139 , _).
 vulExists('H2', 'CVE-2003-0661', 'Netbios_exploit', remoteExploit , privEscalation ).
 networkServiceInfo('H2', 'Rsh_exploit', _, 514, _).
 vulExists('H2', 'CVE-1999-0180', 'Rsh_exploit', remoteExploit , rshLogin ).
+
 hacl('H0', 'H3', _, _).
 hacl('H1', 'H3', _, _).
 hacl('H2', 'H3', _, _).
+networkServiceInfo('H3', 'Squid_exploit', _, 80 , _).
+vulExists('H3', 'CVE-2001-1030', 'Squid_exploit', remoteExploit , squidPortScan ).
 networkServiceInfo('H3', 'LICQ_exploit', _, 5190 , user).
-vulExists('H3', 'CVE-2001-0349', 'LICQ_exploit', remoteExploit , privEscalation ).
-networkServiceInfo('H3', 'Squid_exploit', _, 80 , user).
-vulExists('H3', 'CVE-2001-1030', 'Squid_exploit', remoteExploit , privEscalation ).
+vulExists('H3', 'CVE-2001-0349', 'LICQ_exploit', remoteExploit , licqRemoteToUser ).
 
 attackGoal(execCode('H3', root)).
 vulExists('H3', _, 'Local_exploit', localExploit, privEscalation).
